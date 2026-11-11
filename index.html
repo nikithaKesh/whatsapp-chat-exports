@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Archive — WhatsApp Viewer</title>
+<style>
+:root{color-scheme:dark;--app:#0b141a;--panel:#111b21;--panel2:#202c33;--line:#26343d;--text:#e9edef;--muted:#8696a0;--accent:#00a884;--incoming:#202c33;--outgoing:#005c4b;--wall:#0b141a;--chip:#26343d}
+[data-theme="light"]{color-scheme:light;--app:#e9edef;--panel:#fff;--panel2:#f0f2f5;--line:#e4e8eb;--text:#111b21;--muted:#667781;--accent:#008f72;--incoming:#fff;--outgoing:#d9fdd3;--wall:#efeae2;--chip:#e9edef}
+*{box-sizing:border-box}body{margin:0;background:var(--app);color:var(--text);font:14px/1.45 Inter,system-ui,-apple-system,Segoe UI,sans-serif;height:100vh;height:100dvh;overflow:hidden}
+button,input{font:inherit}button{cursor:pointer;border:0;color:inherit;background:none} .shell{height:100vh;height:100dvh;min-height:0;display:grid;grid-template-columns:340px 1fr;max-width:1600px;margin:auto;background:var(--panel)}
+.sidebar{min-height:0;border-right:1px solid var(--line);display:flex;flex-direction:column;min-width:0}.topbar{height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.2px}.logo{width:32px;height:32px;border-radius:10px;background:var(--accent);display:grid;place-items:center;color:white;font-size:18px}.actions{display:flex;gap:6px}.iconbtn{width:36px;height:36px;border-radius:10px;color:var(--muted);font-size:17px}.iconbtn:hover,.filter:hover{background:var(--panel2);color:var(--text)}
+.import{margin:14px;padding:16px;border:1px dashed var(--muted);border-radius:14px;text-align:center;background:color-mix(in srgb,var(--panel2) 45%,transparent)}.import strong{display:block;margin:5px 0}.import p{color:var(--muted);font-size:12px;margin:4px 0 12px}.primary{background:var(--accent);color:white;padding:10px 14px;border-radius:9px;font-weight:650}.secondary{border:1px solid var(--line);padding:9px 12px;border-radius:9px;color:var(--text)}.searchwrap{padding:0 14px 12px}.search{width:100%;background:var(--panel2);border:1px solid transparent;border-radius:10px;padding:11px 12px;color:var(--text);outline:none}.search:focus{border-color:var(--accent)}.sectionlabel{padding:8px 16px;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:700}.chatlist{overflow-y:auto;min-height:0;flex:1}.chatrow{padding:12px 16px;display:flex;gap:12px;align-items:center;cursor:pointer;border-bottom:1px solid color-mix(in srgb,var(--line) 60%,transparent)}.chatrow:hover,.chatrow.active{background:var(--panel2)}.avatar{width:42px;height:42px;flex:none;border-radius:50%;display:grid;place-items:center;background:#355b52;color:#fff;font-weight:700}.chatmeta{min-width:0;flex:1}.chatname{font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.preview{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.emptylist{padding:20px;color:var(--muted);font-size:13px}
+.main{display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden;background:var(--wall)}.chathead{height:64px;flex:none;background:var(--panel);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 20px;gap:12px}.chathead .avatar{width:38px;height:38px}.headtitle{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:55vw}.headsub{font-size:12px;color:var(--muted)}.headtools{margin-left:auto;display:flex;gap:5px}.conversation{flex:1 1 0;min-height:0;overscroll-behavior:contain;overflow-y:auto;overflow-x:hidden;scrollbar-gutter:stable;padding:22px clamp(16px,5vw,72px);background-color:var(--wall);background-image:radial-gradient(color-mix(in srgb,var(--muted) 10%,transparent) .7px,transparent .7px);background-size:18px 18px;scroll-behavior:smooth}.welcome{height:100%;display:grid;place-items:center;text-align:center;color:var(--muted)}.welcome .mark{font-size:54px;opacity:.5}.welcome h2{color:var(--text);margin:10px 0 4px}.day{display:flex;justify-content:center;margin:18px 0}.day span{background:var(--chip);padding:6px 12px;border-radius:8px;color:var(--muted);font-size:11px;box-shadow:0 1px 1px #0002}.msgrow{display:flex;margin:3px 0}.msgrow.out{justify-content:flex-end}.bubble{position:relative;max-width:min(72%,620px);padding:8px 10px 6px;border-radius:9px;background:var(--incoming);box-shadow:0 1px 1px #0002;overflow-wrap:anywhere}.out .bubble{background:var(--outgoing)}.sender{font-size:11px;font-weight:700;color:#53bdeb;margin-bottom:3px}.body{white-space:pre-wrap;word-break:break-word}.time{float:right;margin:5px 0 0 14px;font-size:10px;color:var(--muted);white-space:nowrap}.out .time{color:color-mix(in srgb,var(--text) 55%,transparent)}.media{display:block;max-width:min(100%,420px);max-height:360px;border-radius:6px;margin:5px 0;object-fit:contain}.filecard{display:flex;gap:10px;align-items:center;background:#0001;padding:10px;border-radius:7px;margin:5px 0;min-width:190px}.fileicon{font-size:23px}.fileinfo{min-width:0}.filename{font-weight:600;overflow-wrap:anywhere}.filesub{font-size:11px;color:var(--muted)}.missing{color:var(--muted);font-style:italic;font-size:12px}.reply{border-left:3px solid var(--accent);background:#0001;padding:6px 8px;margin-bottom:6px;border-radius:4px;font-size:12px;color:var(--muted)}.notice{margin:10px auto;max-width:80%;text-align:center;color:var(--muted);font-size:12px;background:var(--panel2);padding:6px 12px;border-radius:8px}.stats{display:flex;gap:8px;flex-wrap:wrap;padding:10px 18px;background:var(--panel);border-top:1px solid var(--line);font-size:11px;color:var(--muted)}.stat{padding:5px 8px;background:var(--panel2);border-radius:7px}.toolbar{display:flex;gap:6px;align-items:center}.hidden{display:none!important}.modalback{position:fixed;inset:0;background:#0009;display:grid;place-items:center;padding:20px;z-index:5}.modal{width:min(560px,100%);background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}.modal h3{margin:0 0 8px}.modal p{color:var(--muted);font-size:13px}.modalfoot{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}.mobileback{display:none}.scrolltools{position:absolute;right:20px;bottom:72px;display:flex;flex-direction:column;gap:8px;z-index:2}.scrolltools button{width:38px;height:38px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);box-shadow:0 3px 15px #0005;color:var(--text)}.scrolltools button:hover{background:var(--accent);color:white}.main{position:relative}.msgrow .body:empty{display:none}.busy{opacity:.7;pointer-events:none}.emptyquery{padding:30px;text-align:center;color:var(--muted)}
+/* Search toolbar */
+.messagefilters{display:flex;align-items:end;gap:10px;flex-wrap:wrap;padding:12px 18px;background:var(--panel);border-bottom:1px solid var(--line)}
+.filterfield{display:flex;flex-direction:column;gap:5px;min-width:0}.filterfield>span{font-size:11px;color:var(--muted);font-weight:650}.wordfilter{flex:1 1 240px}.datefilter{flex:0 1 180px}.datefilter .search{min-width:155px;min-height:42px}.filterfield .search{height:42px}.clearfilters{height:42px;white-space:nowrap}.filtercount{font-size:11px;color:var(--muted);align-self:center}.search::-webkit-calendar-picker-indicator{cursor:pointer;opacity:.8}.search::-webkit-search-cancel-button{cursor:pointer}
+@media(max-width:760px){.messagefilters{padding:10px 12px;gap:8px}.wordfilter{flex-basis:100%}.datefilter{flex:1}.clearfilters{align-self:end}.filtercount{flex-basis:100%}}
+@media(max-width:760px){.shell{grid-template-columns:1fr}.sidebar{display:none}.sidebar.show{display:flex;position:fixed;inset:0;z-index:3;width:min(360px,88vw);background:var(--panel)}.mobileback{display:inline-grid}.bubble{max-width:88%}.conversation{padding:16px 12px}.chathead{padding:0 12px}}
+@media print{body{height:auto;overflow:visible;background:white;color:#111}.shell{display:block;height:auto}.sidebar,.chathead,.stats,.messagefilters{display:none!important}.main{display:block}.conversation{overflow:visible;background:white;padding:0}.bubble{break-inside:avoid;box-shadow:none;border:1px solid #ddd;color:#111}.out .bubble{background:#e3f5df}.day span{background:#eee;color:#333}.time{color:#555}.sender{color:#087da6}}
+/* quoted replies and manual linking */
+.msgrow{align-items:flex-start}.bubble{min-width:105px}.msg-actions{display:flex;justify-content:flex-end;gap:4px;opacity:0;transition:opacity .16s;margin-top:3px}.bubble:hover .msg-actions,.bubble:focus-within .msg-actions{opacity:1}.msg-actions button{font:inherit;font-size:10px;border:1px solid var(--line);color:var(--muted);border-radius:5px;padding:3px 7px;background:transparent;cursor:pointer}.msg-actions button:hover{color:var(--text);background:var(--panel2)}
+.quoted{display:block;width:100%;text-align:left;border:0;border-left:3px solid var(--accent);background:color-mix(in srgb,var(--panel) 65%,transparent);padding:7px 9px;margin:0 0 7px;border-radius:5px;color:var(--text);cursor:pointer;font:inherit}.quoted .qauthor{font-size:11px;font-weight:700;color:var(--accent);margin-bottom:3px}.quoted .qtext{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:pre-wrap}.linkbar{position:absolute;bottom:55px;left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100% - 28px);background:var(--panel);border:1px solid var(--accent);box-shadow:0 3px 20px #0007;border-radius:10px;display:flex;align-items:center;gap:12px;padding:8px 12px;z-index:4;font-size:12px}.linkbar button{flex:none}.msgrow.linking .bubble{outline:2px solid var(--accent)}.msgrow.focused .bubble{outline:2px solid var(--accent);box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 20%,transparent)}
+@media (hover:none){.msg-actions{opacity:1}}@media print{.msg-actions,.linkbar{display:none!important}}
+</style>
+</head>
+<body data-theme="dark">
+<div class="shell">
+<aside class="sidebar" id="sidebar">
+ <div class="topbar"><div class="brand"><div class="logo">◉</div><span>Archive <small style="font-weight:400;color:var(--muted)">v1.5</small></span></div><div class="actions"><button class="iconbtn" id="themeBtn" title="Switch theme">☼</button><button class="iconbtn" id="aboutBtn" title="About">ⓘ</button></div></div>
+ <div class="import" id="dropzone"><div style="font-size:25px">⇧</div><strong>Import WhatsApp export</strong><p>Drop a .zip or .txt export here. Files stay in this browser session.</p><button class="primary" id="pickBtn">Choose archive</button><input id="fileInput" type="file" accept=".zip,.txt" hidden></div>
+ <div class="searchwrap"><input class="search" id="chatSearch" placeholder="Search conversations…"></div>
+ <div class="sectionlabel">Conversations</div><div class="chatlist" id="chatlist"><div class="emptylist">Your imported conversations will appear here.</div></div>
+</aside>
+<main class="main">
+ <header class="chathead"><button class="iconbtn mobileback" id="menuBtn">☰</button><div class="avatar" id="headAvatar">?</div><div><div class="headtitle" id="headTitle">No conversation selected</div><div class="headsub" id="headSub">Import a WhatsApp archive to begin</div></div><div class="headtools"><button class="iconbtn" id="searchToggle" title="Search messages">⌕</button><button class="iconbtn" id="printBtn" title="Print / save PDF">⤓</button></div></header>
+ <div id="messageSearchBar" class="messagefilters" role="search" aria-label="Search and filter messages">
+  <label class="filterfield wordfilter"><span>Search messages</span><input class="search" id="messageSearch" type="search" placeholder="Search by word or phrase…" autocomplete="off" aria-label="Search message text or sender"></label>
+  <label class="filterfield datefilter"><span>Search by date</span><input class="search" id="messageDate" type="date" aria-label="Filter messages by date"></label>
+  <button class="secondary clearfilters" id="clearFilters" type="button" title="Clear keyword and date filters">Clear filters</button>
+  <span class="filtercount" id="filterCount" aria-live="polite"></span>
+ </div>
+ <section class="conversation" id="conversation"><div class="welcome"><div><div class="mark">◉</div><h2>Your conversations, reconstructed.</h2><div>Import an Android WhatsApp export to view it here.</div></div></div></section>
+ <div id="linkBar" class="linkbar hidden" role="status"><span id="linkInfo"></span><button id="cancelLink" class="iconbtn" title="Cancel reply linking">✕</button></div>
+ <div class="scrolltools hidden" id="scrolltools"><button id="goTop" title="Jump to first message" aria-label="Jump to first message">↑</button><button id="goBottom" title="Jump to latest message" aria-label="Jump to latest message">↓</button></div>
+ <footer class="stats" id="stats"><span class="stat">Read-only archive</span><span class="stat">No messages are sent or modified</span></footer>
+</main>
+</div>
+<div class="modalback hidden" id="modal"><div class="modal"><h3>About Archive Viewer</h3><p>Version 1.5 (message keyword and calendar date filtering, manual quoted-reply linking). This is a local-first viewer for WhatsApp text exports and ZIP archives. It reconstructs message bubbles and displays media files included in the export. It is not WhatsApp and cannot restore an archive into WhatsApp.</p><p><b>Privacy:</b> files are processed in your browser. This starter uses JSZip from a public CDN to read ZIP files; no archive upload endpoint is configured.</p><p><b>Known limitations:</b> Android export formats vary by language and WhatsApp version. Reactions, delivery/read receipts, disappearing-message state, exact reply relationships and some system events may not be represented in the text export. Reply links you create are stored locally in this browser, not in the WhatsApp file.</p><div class="modalfoot"><button class="primary" id="closeModal">Close</button></div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+let chats=[],active=0,mediaUrls=[],allMessages=[],quoteSource=null;
+function cleanName(name){return String(name||'').replace(/^whatsapp(?:\s+chat)?\s+with\s+/i,'').replace(/^whatsapp\s+chat\s*[-–:]\s*/i,'').replace(/\s*[-–]?\s*whatsapp\s+chat$/i,'').trim()||'Imported conversation'}
+function isOmitted(s){return /^\s*(?:<\s*(?:media|image|video|audio|sticker|gif|document)\s+omitted\s*>|(?:image|video|audio|media|sticker|document)\s+omitted)\s*$/i.test(s||'')}
+function attachmentName(m){return m.attachment||((m.body.match(/([^/\\]+\.(?:jpg|jpeg|png|gif|webp|heic|mp4|mov|3gp|opus|ogg|mp3|m4a|pdf|docx?|xlsx?|pptx?))\s+\(file attached\)/i)||[])[1])||''}
+function availableAttachment(m,chat){let wanted=attachmentName(m);return wanted?Object.keys(chat.media||{}).find(k=>basename(k).toLowerCase()===basename(wanted).toLowerCase()):null}
+function cleanBody(m){return m.body.replace(/<attached:\s*.+?>/ig,'').replace(/[^\n]*?\.(?:jpg|jpeg|png|gif|webp|heic|mp4|mov|3gp|opus|ogg|mp3|m4a|pdf|docx?|xlsx?|pptx?)\s+\(file attached\)/ig,'').replace(/\s*\(file attached\)/ig,'').trim()}
+// Identify the display labels embedded by some third-party WhatsApp export tools.
+// A label may be shorter than the contact name (e.g. "Neth's Friend" vs
+// "Nikini Neth's Friend"), or differ from the underlying sender ID.
+function normalizeLabel(s){return String(s||'').replace(/[\u200b-\u200f\uFEFF]/g,'').replace(/\s+/g,' ').trim().toLocaleLowerCase()}
+function senderPrefixes(chat){
+ const known=new Set([chat.name,...(chat.participants||[]),...chat.messages.map(m=>m.sender)].filter(Boolean).map(normalizeLabel));
+ const counts=new Map();
+ for(const m of chat.messages){
+  if(m.system)continue;
+  const match=cleanBody(m).match(/^\s*([^\n:]{3,85}):[ \t]+\S/);
+  if(match){const name=normalizeLabel(match[1]);counts.set(name,(counts.get(name)||0)+1)}
+ }
+ const repeated=[...counts].filter(([label,n])=>n>=2 && label.length>=3 && (
+  [...known].some(k=>k===label||k.endsWith(' '+label)||label.endsWith(' '+k)) || n>=3
+ )).map(([label])=>label);
+ return [...new Set([...known,...repeated])].sort((a,b)=>b.length-a.length);
+}
+function messageBody(m,chat){
+ let body=cleanBody(m);
+ if(!chat)return body;
+ const prefixes=chat.prefixes||(chat.prefixes=senderPrefixes(chat));
+ // Only remove a repeated display label at the very beginning, not colons
+ // elsewhere in a message, such as "Time: 5 PM".
+ for(let i=0;i<3;i++){
+  const match=body.match(/^\s*([^\n:]{3,85}):[ \t]+/);
+  if(!match||!prefixes.includes(normalizeLabel(match[1])))break;
+  body=body.slice(match[0].length);
+ }
+ return body.trim();
+}
+function isVisible(m,chat){if(m.system)return true;let body=messageBody(m,chat);return (!!body&&!isOmitted(body))||!!availableAttachment(m,chat)}
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function revokeMedia(){mediaUrls.forEach(URL.revokeObjectURL);mediaUrls=[]}
+function basename(p){return p.split('/').pop().replace(/^.*\\\\/,'')}
+let chatDayFirst=true;
+function parseDate(raw){
+ let s=raw.trim().replace(/\u200e|\u200f/g,'');
+ let m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4}),?\s+(.+)$/);
+ if(m){let y=+m[3];if(y<100)y+=2000;let a=+m[1],b=+m[2];let dayFirst=a>12 || (b<=12 && a<=12 && chatDayFirst);let d=new Date(y,dayFirst?b-1:a-1,dayFirst?a:b);let t=parseTime(m[4]);if(t){d.setHours(t.h,t.m,t.s)}return isNaN(d)?null:d}
+ m=s.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2}),?\s+(.+)$/);
+ if(m){let d=new Date(+m[1],+m[2]-1,+m[3]);let t=parseTime(m[4]);if(t)d.setHours(t.h,t.m,t.s);return isNaN(d)?null:d}
+ return null;
+}
+function parseTime(s){let m=s.match(/(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)?/i);if(!m)return null;let h=+m[1],ap=(m[4]||'').toUpperCase();if(ap==='PM'&&h<12)h+=12;if(ap==='AM'&&h===12)h=0;return {h,m:+m[2],s:+(m[3]||0)}}
+function parseChat(text){
+ const firstDates=[...text.matchAll(/^(\d{1,2})\/(\d{1,2})\/\d{2,4},/gm)].slice(0,150);chatDayFirst=firstDates.some(m=>+m[1]>12)||!firstDates.some(m=>+m[2]>12);
+ const lines=text.replace(/^\uFEFF/,'').split(/\r?\n/),msgs=[];let cur=null;
+ // Android exports commonly use M/D/YY, h:mm AM/PM - Sender: message; also 24-hour and YYYY-MM-DD variants.
+ const start=/^(?:\u200e|\u200f)?(\d{1,2}\/\d{1,2}\/\d{2,4},?\s+\d{1,2}:\d{2}(?::\d{2})?\s*(?:AM|PM)?|\d{4}[-/.]\d{1,2}[-/.]\d{1,2},?\s+\d{1,2}:\d{2}(?::\d{2})?(?:\s*(?:AM|PM))?)\s+-\s+(.+)$/i;
+ for(const line of lines){const m=line.match(start);if(m){if(cur)msgs.push(cur);let rest=m[2],sender='',body=rest;const sep=rest.indexOf(': ');if(sep>=0){sender=rest.slice(0,sep);body=rest.slice(sep+2)}else{body=rest}cur={date:parseDate(m[1]),dateRaw:m[1],sender,body,system:!sender};}else if(cur){cur.body+='\n'+line}}
+ if(cur)msgs.push(cur);
+ return msgs.map((m,i)=>({...m,id:i,attachment:(m.body.match(/<attached:\s*(.+?)>/i)||[])[1]||null}));
+}
+function isoLocalDate(d){if(!d||isNaN(d.getTime()))return '';return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
+function fmtDate(d){return d?d.toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'}):'Date unavailable'}
+function fmtTime(d,raw){return d?d.toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}):(raw.match(/\d{1,2}:\d{2}\s*(?:AM|PM)?/i)||[''])[0]}
+function chatName(msgs,name){const senders=[...new Set(msgs.map(m=>m.sender).filter(Boolean))];return cleanName(name||senders.join(' · ')||'Imported conversation')}
+function fileKind(name){let ext=(name.split('.').pop()||'').toLowerCase();if(['jpg','jpeg','png','gif','webp','heic'].includes(ext))return'image';if(['mp4','mov','3gp','mkv','webm'].includes(ext))return'video';if(['mp3','m4a','opus','ogg','wav','aac'].includes(ext))return'audio';return'file'}
+function attachmentHtml(m,chat){
+ let wanted=attachmentName(m);
+ if(!wanted)return '';
+ const key=availableAttachment(m,chat);
+ if(!key)return '';
+ const obj=chat.media[key],url=obj.url,kind=fileKind(key),name=basename(key);
+ if(kind==='image')return `<a href="${url}" target="_blank"><img class="media" src="${url}" alt="${esc(name)}"></a>`;
+ if(kind==='video')return `<video class="media" controls src="${url}"></video>`;
+ if(kind==='audio')return `<audio controls src="${url}" style="max-width:100%;margin:6px 0"></audio>`;
+ return `<a class="filecard" href="${url}" download="${esc(name)}" style="color:inherit;text-decoration:none"><span class="fileicon">▤</span><span class="fileinfo"><span class="filename">${esc(name)}</span><span class="filesub">Download attachment</span></span></a>`;
+}
+function chatKey(chat){return 'wa-replies-v1-'+chat.fingerprint}
+function hashText(s){let h=2166136261;for(let i=0;i<s.length;i++){h=Math.imul(h^s.charCodeAt(i),16777619)}return (h>>>0).toString(36)+'-'+s.length}
+function loadLinks(chat){try{let o=JSON.parse(localStorage.getItem(chatKey(chat))||'{}');return o&&typeof o==='object'&&!Array.isArray(o)?o:{}}catch{return {}}}
+function saveLinks(chat){try{localStorage.setItem(chatKey(chat),JSON.stringify(chat.links))}catch{alert('This browser did not allow saving reply links. They may be lost when this page is closed.')}}
+function messageLabel(m,chat){let b=messageBody(m,chat);return (b&&!isOmitted(b)?b:'Attachment').slice(0,110)}
+function jumpToMessage(id){let c=chats[active];if(!c)return;let target=$('msg-'+id);if(!target){$('messageSearch').value='';$('messageDate').value='';renderChat(false);target=$('msg-'+id)}if(target){target.scrollIntoView({behavior:'smooth',block:'center'});target.classList.add('focused');setTimeout(()=>target.classList.remove('focused'),1700)}}
+function updateLinkBar(){let bar=$('linkBar');bar.classList.toggle('hidden',quoteSource===null);if(quoteSource!==null){let chat=chats[active],m=chat?.messages.find(m=>m.id===quoteSource);$('linkInfo').textContent='Quoting: '+(m?messageLabel(m,chat):'message')+' — choose “Link reply” on the response.'}}
+function linkAction(action,id){const c=chats[active];if(!c)return; if(action==='quote'){quoteSource=id;renderChat(false);updateLinkBar();jumpToMessage(id);return}if(action==='link'){if(quoteSource===null||quoteSource===id)return;let source=c.messages.find(m=>m.id===quoteSource);if(!source)return;c.links[id]=quoteSource;saveLinks(c);quoteSource=null;renderChat(false);updateLinkBar();jumpToMessage(id)}else if(action==='unlink'){delete c.links[id];saveLinks(c);renderChat(false);jumpToMessage(id)}}
+$('cancelLink').onclick=()=>{quoteSource=null;updateLinkBar()};
+$('conversation').addEventListener('click',e=>{const q=e.target.closest('[data-jump]');if(q){jumpToMessage(Number(q.dataset.jump));return}const a=e.target.closest('[data-linkaction]');if(a){linkAction(a.dataset.linkaction,Number(a.dataset.id))}});
+
+function renderChat(goEnd=true){
+ const chat=chats[active];if(!chat)return;
+ $('headTitle').textContent=chat.name;$('headAvatar').textContent=(chat.name[0]||'?').toUpperCase();
+ $('headSub').textContent=`${chat.messages.filter(m=>isVisible(m,chat)).length.toLocaleString()} visible messages · Imported archive`;
+ const query=$('messageSearch').value.trim().toLocaleLowerCase();const selectedDate=$('messageDate').value;let html='',lastDay='',visible=0;
+ for(const m of chat.messages){
+  if(!isVisible(m,chat))continue;
+  if(selectedDate&&isoLocalDate(m.date)!==selectedDate)continue;
+  if(query&&!(`${m.sender} ${messageBody(m,chat)} ${attachmentName(m)}`.toLocaleLowerCase().includes(query)))continue;
+  visible++;
+  const day=m.date?fmtDate(m.date):'Date unavailable';
+  if(day!==lastDay){html+=`<div class="day"><span>${esc(day)}</span></div>`;lastDay=day}
+  if(m.system){html+=`<div class="notice">${esc(m.body)}</div>`;continue}
+  const outgoing=m.sender===chat.outgoing;
+  let body=messageBody(m,chat);if(isOmitted(body))body='';
+  const originalId=chat.links?.[m.id];
+  const original=originalId!==undefined?chat.messages.find(x=>x.id===Number(originalId)):null;
+  const quoted=original?`<button type="button" class="quoted" data-jump="${original.id}" title="Jump to quoted message"><div class="qauthor">${esc(original.sender===chat.outgoing?'You':original.sender||'Message')}</div><div class="qtext">${esc(messageLabel(original,chat))}</div></button>`:'';
+  const actions=`<div class="msg-actions"><button data-linkaction="quote" data-id="${m.id}" title="Choose this as the original message">Quote</button>${quoteSource!==null&&quoteSource!==m.id?`<button data-linkaction="link" data-id="${m.id}">Link reply</button>`:''}${original?`<button data-linkaction="unlink" data-id="${m.id}">Unlink</button>`:''}</div>`;
+  html+=`<div id="msg-${m.id}" class="msgrow ${outgoing?'out':'in'}"><div class="bubble">${quoted}${chat.group&&m.sender?`<div class="sender">${esc(m.sender)}</div>`:''}<div class="body">${esc(body)}</div>${attachmentHtml(m,chat)}<div class="time">${esc(fmtTime(m.date,m.dateRaw))}</div>${actions}</div></div>`;
+ }
+ $('conversation').innerHTML=html||'<div class="emptyquery">No messages match your search or selected date. Try clearing the filters.</div>';
+ $('filterCount').textContent=(query||selectedDate)?`${visible.toLocaleString()} match${visible===1?'':'es'}`:'';
+ $('scrolltools').classList.toggle('hidden',visible<10);
+ if(goEnd)$('conversation').scrollTop=$('conversation').scrollHeight;
+ const senders=new Set(chat.messages.map(m=>m.sender).filter(Boolean)).size;
+ $('stats').innerHTML=`<span class="stat">${chat.messages.length.toLocaleString()} messages</span><span class="stat">${senders} participants</span><span class="stat">${chat.mediaCount||0} media files</span><span class="stat">Read-only archive</span>`;
+}
+function renderList(){
+ const q=$('chatSearch').value.toLowerCase();$('chatlist').innerHTML='';
+ chats.filter(c=>c.name.toLowerCase().includes(q)).forEach((c,i)=>{let el=document.createElement('div');el.className='chatrow '+(chats.indexOf(c)===active?'active':'');el.innerHTML=`<div class="avatar">${esc((c.name[0]||'?').toUpperCase())}</div><div class="chatmeta"><div class="chatname">${esc(c.name)}</div><div class="preview">${esc((()=>{const m=[...c.messages].reverse().find(m=>isVisible(m,c));return m?messageBody(m,c):''})())}</div></div>`;el.onclick=()=>{active=chats.indexOf(c);$('messageSearch').value='';$('messageDate').value='';$('filterCount').textContent='';quoteSource=null;updateLinkBar();renderList();renderChat();$('sidebar').classList.remove('show')};$('chatlist').append(el)});
+ if(!chats.length)$('chatlist').innerHTML='<div class="emptylist">No archives imported yet.</div>';
+}
+function guessOutgoing(msgs){let counts={};msgs.forEach(m=>{if(m.sender)counts[m.sender]=(counts[m.sender]||0)+1});return Object.entries(counts).sort((a,b)=>b[1]-a[1])[0]?.[0]||''}
+async function importFile(file){
+ revokeMedia();let text='',media={},mediaCount=0,name=file.name.replace(/\.(zip|txt)$/i,'');
+ if(file.name.toLowerCase().endsWith('.zip')){
+  if(!window.JSZip){alert('ZIP support could not load. Check your internet connection and reload.');return}
+  const zip=await JSZip.loadAsync(file);
+  const entries=Object.values(zip.files).filter(f=>!f.dir);
+  const txt=entries.filter(f=>/\.txt$/i.test(f.name)).sort((a,b)=>a.name.length-b.name.length)[0];
+  if(!txt){alert('No .txt chat transcript was found in this ZIP.');return}
+  text=await txt.async('string');
+  for(const f of entries){if(f===txt)continue;const blob=await f.async('blob');const url=URL.createObjectURL(blob);media[f.name]={url,blob};mediaCount++}
+ }else{text=await file.text()}
+ const messages=parseChat(text);if(!messages.length){alert('I could not recognise message lines in this export. This may use a different date or language format.');return}
+ const senders=[...new Set(messages.map(m=>m.sender).filter(Boolean))];
+ const chat={name:chatName(messages,name),messages,media,mediaCount,participants:senders,outgoing:guessOutgoing(messages),group:senders.length>2,fingerprint:hashText(text)};chat.links=loadLinks(chat);quoteSource=null;updateLinkBar();
+ chats.unshift(chat);active=0;$('messageSearch').value='';$('messageDate').value='';renderList();renderChat();
+}
+$('goTop').onclick=()=>{const c=$('conversation');c.scrollTo({top:0,behavior:'smooth'})};
+$('goBottom').onclick=()=>{const c=$('conversation');c.scrollTo({top:c.scrollHeight,behavior:'smooth'})};
+$('pickBtn').onclick=()=>$('fileInput').click();$('fileInput').onchange=async e=>{if(e.target.files[0]){try{await importFile(e.target.files[0])}catch(err){console.error(err);alert('Unable to open this export. Please check the ZIP or TXT file.')}finally{e.target.value=''}}};
+$('dropzone').addEventListener('dragover',e=>{e.preventDefault();$('dropzone').style.borderColor='var(--accent)'});
+$('dropzone').addEventListener('dragleave',()=>$('dropzone').style.borderColor='var(--muted)');
+$('dropzone').addEventListener('drop',e=>{e.preventDefault();$('dropzone').style.borderColor='var(--muted)';if(e.dataTransfer.files[0])importFile(e.dataTransfer.files[0]).catch(err=>{console.error(err);alert('Could not import this archive.')})});
+$('chatSearch').oninput=renderList;$('messageSearch').oninput=()=>renderChat(false);$('messageDate').onchange=()=>renderChat(false);$('messageDate').oninput=()=>renderChat(false);
+$('clearFilters').onclick=()=>{$('messageSearch').value='';$('messageDate').value='';if(chats.length)renderChat(false);else $('filterCount').textContent='';};
+$('searchToggle').onclick=()=>{$('messageSearch').focus()};
+$('printBtn').onclick=()=>{if(chats.length)window.print();else alert('Import a conversation first.')};
+$('themeBtn').onclick=()=>{let next=document.body.dataset.theme==='dark'?'light':'dark';document.body.dataset.theme=next;$('themeBtn').textContent=next==='dark'?'☼':'☾'};
+$('aboutBtn').onclick=()=>$('modal').classList.remove('hidden');$('closeModal').onclick=()=>$('modal').classList.add('hidden');
+$('menuBtn').onclick=()=>$('sidebar').classList.toggle('show');
+window.addEventListener('beforeunload',revokeMedia);
+</script>
+</body></html>
